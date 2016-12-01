@@ -8,6 +8,18 @@
 var config = require('./server/config/config');
 var app = require('./server/server');
 var logger = require('./server/util/logger');
+const mongoose = require('mongoose');
 
-app.listen(config.port);
-logger.log('listening on http://localhost:' + config.port);
+
+
+mongoose.connect('mongodb://localhost:27017/vod-development' , (err, resp) => {
+  if (err) {
+    return logger.log(`Error while trying to connect to the MongoDB: ${err}`);
+  };
+
+  console.log('Connection to the MongoDB properly done');
+
+  app.listen(config.port);
+  logger.log('API REST listening on http://localhost:' + config.port);
+
+});

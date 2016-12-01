@@ -6,7 +6,12 @@ var LearningPathSchema = new Schema({
     type: String,
     unique: true,
     required: true
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
   }
 });
 
-module.exports = mongoose.model('tag', LearningPathSchema);
+module.exports = mongoose.model('learningPath', LearningPathSchema);

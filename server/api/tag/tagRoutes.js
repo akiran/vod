@@ -26,13 +26,12 @@ tagRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, funct
 });
 
 tagRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
-  var newTag = tagModel({
-    name: req.body.name,
-    userId: req.currentUser._id
-  });
+  var tag = req.body;
+  tag.userId: req.currentUser._id;
+  var newTagModel = tagModel({tag);
 
   // save the user
-  newTag.save(function(err) {
+  newTagModel.save(function(err) {
     if (err) res.status(403).send(err);
 
     res.status(200).send(newTag);
@@ -40,19 +39,12 @@ tagRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, functio
 });
 
 tagRouter.put('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
+  tagModel.findOneAndUpdate({_id:req.params.id}, req.body, function (err, tag) {
+    if (err) {
+      return res.status(403).send(err);
+    }
 
-  tagModel.findById(req.params.id, function(err, tag) {
-    if (err) throw err;
-
-    tag.name = req.body.name;
-
-    tag.save(function(err) {
-      if (err) {
-        return res.status(403).send(err);
-      }
-
-      res.status(200).send(tag);
-    });
+    res.status(200).send(tag);
   });
 });
 

@@ -26,13 +26,12 @@ learningPathRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdm
 });
 
 learningPathRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
-  var newLearningPath = learningPathModel({
-    name: req.body.name,
-    userId: req.currentUser._id
-  });
+  const learningPath = req.body;
+  learningPath.userId = req.currentUser._id;
+  var newLearningPathModel = learningPathModel(learningPath);
 
   // save the user
-  newLearningPath.save(function(err) {
+  newLearningPathModel.save(function(err) {
     if (err) res.status(403).send(err);
 
     res.status(200).send(newLearningPath);
@@ -41,18 +40,12 @@ learningPathRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin
 
 learningPathRouter.put('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
 
-  learningPathModel.findById(req.params.id, function(err, learningPath) {
-    if (err) throw err;
+  learningPathModel.findOneAndUpdate({_id:req.params.id}, req.body, function (err, learningPath) {
+    if (err) {
+      return res.status(403).send(err);
+    }
 
-    learningPath.name = req.body.name;
-
-    learningPath.save(function(err) {
-      if (err) {
-        return res.status(403).send(err);
-      }
-
-      res.status(200).send(learningPath);
-    });
+    res.status(200).send(chef);
   });
 });
 

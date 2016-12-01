@@ -53,17 +53,19 @@ var RecipeSchema = new Schema({
     required: true
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'chef',
     required: true
   },
   ingredients: {
     type: Array
   },
-  step: {
+  steps: {
     type: Array
   },
   userId: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'user',
     required: true
   }
 });

@@ -6,7 +6,12 @@ var CategorySchema = new Schema({
     type: String,
     unique: true,
     required: true
-  }
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
+  },
 });
 
-module.exports = mongoose.model('tag', CategorySchema);
+module.exports = mongoose.model('category', CategorySchema);

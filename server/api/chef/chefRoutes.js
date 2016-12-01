@@ -26,15 +26,13 @@ chefRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, func
 });
 
 chefRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
-  var newChef = chefModel({
-    name: req.body.name,
-    thumbnail: req.body.thumbnail,
-    description: req.body.description,
-    userId: req.currentUser._id
-  });
+  var chef = req.body;
+  chef.userId: req.currentUser._id
+
+  var newChefModel = chefModel(chef);
 
   // save the user
-  newChef.save(function(err) {
+  newChefModel.save(function(err) {
     if (err) res.status(403).send(err);
 
     res.status(200).send(newChef);
@@ -43,20 +41,12 @@ chefRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, functi
 
 chefRouter.put('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
 
-  chefModel.findById(req.params.id, function(err, chef) {
-    if (err) throw err;
+  chefModel.findOneAndUpdate({_id:req.params.id}, req.body, function (err, chef) {
+    if (err) {
+      return res.status(403).send(err);
+    }
 
-    chef.name = req.body.name;
-    chef.thumbnail =  req.body.thumbnail;
-    chef.description =  req.body.description;
-
-    chef.save(function(err) {
-      if (err) {
-        return res.status(403).send(err);
-      }
-
-      res.status(200).send(chef);
-    });
+    res.status(200).send(chef);
   });
 });
 

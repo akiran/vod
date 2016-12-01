@@ -1,17 +1,18 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var ChefSchema = new Schema({
-  name: {
+var CommentSchema = new Schema({
+  text: {
     type: String,
     required: true
   }
-  thumbnail: {
-    type: String,
+  created: {
+    type: Number,
     required: true
   },
-  description: {
-    type: String,
+  recipeId: {
+    type: Schema.Types.ObjectId,
+    ref: 'recipe',
     required: true
   },
   userId: {
@@ -21,4 +22,4 @@ var ChefSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('chef', ChefSchema);
+module.exports = mongoose.model('comment', CommentSchema);

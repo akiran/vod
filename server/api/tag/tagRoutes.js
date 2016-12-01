@@ -1,7 +1,7 @@
 const tagRouter = require('express').Router();
 const tagModel = require('./tagModel');
 const logger = require('../../util/logger');
-
+var authMiddleware = require('../../middleware/authMiddleware');
 
 
 tagRouter.get('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
@@ -33,7 +33,7 @@ tagRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, functio
   newTagModel.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newTag);
+    res.status(200).send(tag);
   });
 });
 

@@ -4,7 +4,7 @@ const logger = require('../../util/logger');
 var authMiddleware = require('../../middleware/authMiddleware');
 
 
-commentRouter.get('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
+commentRouter.get('/', authMiddleware.checkUser, function(req, res) {
   commentModel.find({}, function(err, categories) {
     if (err) {
       return res.status(403).send(err);
@@ -14,7 +14,7 @@ commentRouter.get('/', authMiddleware.checkUser, authMiddleware.checkAdmin, func
   });
 });
 
-commentRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
+commentRouter.get('/:id', authMiddleware.checkUser, function(req, res) {
   commentModel.findById(req.params.id, function(err, comment) {
     if (err) {
       return res.status(403).send(err);
@@ -24,9 +24,10 @@ commentRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, f
   });
 });
 
-commentRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
+commentRouter.post('/', authMiddleware.checkUser, function(req, res) {
   let comment = req.body;
   comment.created = Date.now();
+  // comment.created = new Date("<YYYY-mm-dd>");
   comment.userId = req.currentUser._id;
 
   let newCommentModel = commentModel(comment);
@@ -35,7 +36,7 @@ commentRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, fun
   newCommentModel.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newComment);
+    res.status(200).send(comment);
   });
 });
 

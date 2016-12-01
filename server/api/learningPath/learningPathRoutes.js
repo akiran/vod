@@ -33,7 +33,7 @@ learningPathRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin
   newLearningPathModel.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newLearningPath);
+    res.status(200).send(learningPath);
   });
 });
 
@@ -44,7 +44,7 @@ learningPathRouter.put('/:id', authMiddleware.checkUser, authMiddleware.checkAdm
       return res.status(403).send(err);
     }
 
-    res.status(200).send(chef);
+    res.status(200).send(learningPath);
   });
 });
 

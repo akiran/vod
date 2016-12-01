@@ -26,16 +26,16 @@ categoryRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, 
 });
 
 categoryRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
-  let newCategory = categoryModel({
-    name: req.body.name,
-    userId: req.currentUser._id
-  });
+  let category = req.body;
+  category.userId = req.currentUser._id;
+
+  let newCategoryModel = categoryModel(category);
 
   // save the user
   newCategory.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newCategory);
+    res.status(200).send(category);
   });
 });
 

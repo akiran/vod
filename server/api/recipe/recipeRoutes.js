@@ -16,16 +16,16 @@ var authMiddleware = require('../../middleware/authMiddleware');
 //   next();
 // };
 
-recipeRouter.param('id', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res, next, id) {
-  var recipe = _.find(recipes, {id: id});
-
-  if (recipe) {
-    req.recipe = recipe;
-    next();
-  } else {
-    res.send();
-  }
-});
+// recipeRouter.param('id', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res, next, id) {
+//   var recipe = _.find(recipes, {id: id});
+//
+//   if (recipe) {
+//     req.recipe = recipe;
+//     next();
+//   } else {
+//     res.send();
+//   }
+// });
 
 
 recipeRouter.get('/',authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
@@ -51,14 +51,15 @@ recipeRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, fu
 recipeRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
   var recipe = req.body;
   recipe.userId = req.currentUser._id;
-  recipe.created = new Date("<YYYY-mm-dd>");
+  // recipe.created = new Date("<YYYY-mm-dd>");
+  recipe.created = new Date.now();
   var newRecipe = recipeModel(recipe);
 
   // save the user
   newRecipe.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newRecipe);
+    res.status(200).send(recipe);
   });
 });
 

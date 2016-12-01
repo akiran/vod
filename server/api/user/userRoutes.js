@@ -13,7 +13,7 @@ userRouter.get('/', authMiddleware.checkUser, function(req, res) {
     if (err) {
       return res.status(403).send(err);
     }
-    // object of all the users
+
     res.status(200).send(users);
   });
 });
@@ -23,7 +23,7 @@ userRouter.get('/:id', function(req, res) {
     if (err) {
       return res.status(403).send(err);
     }
-    // show the one user
+    
     res.status(200).send(user);
   });
 });

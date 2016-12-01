@@ -10,7 +10,7 @@ tagRouter.get('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function
     if (err) {
       return res.status(403).send(err);
     }
-    // object of all the recipes
+
     res.status(200).send(tags);
   });
 });
@@ -28,13 +28,12 @@ tagRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, funct
 tagRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
   var tag = req.body;
   tag.userId: req.currentUser._id;
-  var newTagModel = tagModel({tag);
+  var newTagModel = tagModel({tag});
 
-  // save the user
   newTagModel.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newTag);
+    res.status(200).send(tag);
   });
 });
 

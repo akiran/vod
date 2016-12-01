@@ -10,7 +10,7 @@ chefRouter.get('/', authMiddleware.checkUser, authMiddleware.checkAdmin, functio
     if (err) {
       return res.status(403).send(err);
     }
-    // object of all the recipes
+
     res.status(200).send(categories);
   });
 });
@@ -31,11 +31,10 @@ chefRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, functi
 
   var newChefModel = chefModel(chef);
 
-  // save the user
   newChefModel.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newChef);
+    res.status(200).send(chef);
   });
 });
 

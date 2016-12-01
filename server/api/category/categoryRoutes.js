@@ -10,7 +10,7 @@ categoryRouter.get('/', authMiddleware.checkUser, authMiddleware.checkAdmin, fun
     if (err) {
       return res.status(403).send(err);
     }
-    // object of all the recipes
+
     res.status(200).send(categories);
   });
 });
@@ -26,16 +26,16 @@ categoryRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, 
 });
 
 categoryRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
-  var newCategory = categoryModel({
-    name: req.body.name,
-    userId: req.currentUser._id
-  });
+  var category = req.body;
+  category.userId = req.currentUser._id;
 
-  // save the user
-  newCategory.save(function(err) {
+  var newCategoryModel = categoryModel(category);
+
+
+  newCategoryModel.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newCategory);
+    res.status(200).send(category);
   });
 });
 

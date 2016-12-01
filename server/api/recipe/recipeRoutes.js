@@ -10,7 +10,7 @@ recipeRouter.get('/', authMiddleware.checkUser, authMiddleware.checkAdmin, funct
     if (err) {
       return res.status(403).send(err);
     }
-    // object of all the recipes
+    
     res.status(200).send(recipes);
   });
 });
@@ -28,13 +28,12 @@ recipeRouter.get('/:id', authMiddleware.checkUser, authMiddleware.checkAdmin, fu
 recipeRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin, function(req, res) {
   var recipe = req.body;
   recipe.userId = req.currentUser._id;
-  var newRecipe = recipeModel(recipe);
+  var newRecipeModel = recipeModel(recipe);
 
-  // save the user
-  newRecipe.save(function(err) {
+  newRecipeModel.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newRecipe);
+    res.status(200).send(recipe);
   });
 });
 

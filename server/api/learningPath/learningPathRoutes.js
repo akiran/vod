@@ -10,7 +10,7 @@ learningPathRouter.get('/', authMiddleware.checkUser, authMiddleware.checkAdmin,
     if (err) {
       return res.status(403).send(err);
     }
-    // object of all the recipes
+    
     res.status(200).send(learningPaths);
   });
 });
@@ -34,7 +34,7 @@ learningPathRouter.post('/', authMiddleware.checkUser, authMiddleware.checkAdmin
   newLearningPathModel.save(function(err) {
     if (err) res.status(403).send(err);
 
-    res.status(200).send(newLearningPath);
+    res.status(200).send(learningPath);
   });
 });
 

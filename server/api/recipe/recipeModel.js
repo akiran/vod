@@ -18,6 +18,10 @@ const RecipeSchema = Schema ({
     type: String,
     required: true
   },
+  categories: [{
+    type: Schema.Types.ObjectId,
+    ref: 'category'
+  }],
   tags: [{
     type: Schema.Types.ObjectId,
     ref: 'tag'
@@ -27,16 +31,16 @@ const RecipeSchema = Schema ({
     ref: 'learningPath',
     required: true
   }],
-  type: {
+  courseType: {
     type: String,
     required: true,
     enum: ['starter' , 'main', 'dessert', 'snack', 'drink', 'cocktail']
   },
-  picture: {
+  pictureIngredients: {
     type: String,
     required: true
   },
-  finalPicture: {
+  picturePlating: {
     type: String,
     required: true
   },
@@ -51,6 +55,11 @@ const RecipeSchema = Schema ({
   videoFull: {
     type: String,
     required: true
+  },
+  length: {
+    type: Number,
+    min: 0,
+    default:0
   },
   difficulty: {
     type: String,
@@ -90,6 +99,10 @@ const RecipeSchema = Schema ({
     type: Schema.Types.ObjectId,
     ref: 'recipeSkillLearnt',
     required: true
+  }],
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'comment',
   }],
   userId: {
     type: Schema.Types.ObjectId,

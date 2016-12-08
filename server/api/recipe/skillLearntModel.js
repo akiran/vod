@@ -7,7 +7,7 @@ const RecipeSkillLearntSchema = new Schema({
 
   name: {
     type: String,
-    required: true,
+    required: true, // check if is always required
     unique: true
   }
 

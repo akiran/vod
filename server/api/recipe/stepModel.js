@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const StepSchema = new Schema({
 
-  picuteUrl: {
+  picture: {
     type: String,
     required: true
   },

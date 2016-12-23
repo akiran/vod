@@ -11,7 +11,7 @@ var logger = require('./server/util/logger');
 const mongoose = require('mongoose');
 
 
-
+console.log('before mongoose')
 mongoose.connect('mongodb://localhost:27017/vod-development' , (err, resp) => {
   if (err) {
     return logger.log(`Error while trying to connect to the MongoDB: ${err}`);
@@ -23,3 +23,5 @@ mongoose.connect('mongodb://localhost:27017/vod-development' , (err, resp) => {
   logger.log('API REST listening on http://localhost:' + config.port);
 
 });
+
+console.log('after mongoose')
